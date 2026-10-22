@@ -1,5 +1,7 @@
 # cc3x3
 
+![License](https://img.shields.io/github/license/riecodes/cc3x3?style=flat-square&color=green) ![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=flat-square&logo=windows&logoColor=white) ![PowerShell 7](https://img.shields.io/badge/PowerShell-7-5391FE?style=flat-square&logo=powershell&logoColor=white) ![Claude Code](https://img.shields.io/badge/Claude%20Code-launcher-D97757?style=flat-square&logo=anthropic&logoColor=white)
+
 Tile Windows Terminal windows into a screen grid and launch [Claude Code](https://claude.com/claude-code) in each one with a single command.
 
 Type `cc` in any Terminal window and it snaps itself into a free cell of a grid, then starts Claude. Run it in a few windows and you get a clean 3x2 or 3x3 wall of agents, or the four screen corners (2x2). Corners are squared, side strips are left free for a browser, and a zoom helper keeps the text readable on both a laptop and a desktop.
@@ -13,9 +15,29 @@ cc z-2        # zoom out two steps (base font size); z0 resets, z2 zooms in. Alo
 cc 3x3 --model opus   # trailing args pass through to the launch command
 ```
 
-## Why
+## Setup (once)
 
-Running several Claude Code sessions at once means a pile of terminals you drag around by hand. `cc` places each new one in the next free cell, so the grid builds itself. 3x2 and 3x3 span 92% of the width and stay centered, leaving a strip on each side to click through to whatever is behind. 2x2 uses Windows' own Snap Layouts so the four windows form a real snap group with square corners.
+### One prompt
+
+Open your agent in any folder (for example `claude` in a terminal) and paste:
+
+```text
+Set up cc3x3 for me. Clone https://github.com/riecodes/cc3x3.git into my Documents folder
+(install Git and PowerShell 7 first if either is missing, after asking me). Then run
+pwsh -File cc3x3\install.ps1 to add it to my PowerShell profile. When you finish, tell me to
+open a new Windows Terminal window and that typing cc tiles it into the grid and starts Claude
+Code, with cc 3x3 / cc 2x2 for layouts and cc z-2 / cc z2 for zoom.
+```
+
+### Step by step
+
+1. **Get it.** `git clone https://github.com/riecodes/cc3x3.git`, or use *Code > Download ZIP* on GitHub and unzip it.
+2. **Install.** `pwsh -File cc3x3\install.ps1` appends a dot-source line to your `$PROFILE`. Or add it yourself to `$PROFILE` (`~\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`):
+
+   ```powershell
+   . "C:\path\to\cc3x3\cc.ps1"
+   ```
+3. **Use it.** Open a new Terminal window (or run `. $PROFILE`) and type `cc`.
 
 ## Requirements
 
@@ -23,24 +45,6 @@ Running several Claude Code sessions at once means a pile of terminals you drag 
 - **Windows Terminal**
 - **PowerShell 7** (`pwsh`)
 - **Claude Code** on `PATH` (`claude`), or change the launch command in the config (see below)
-
-## Install
-
-Clone it anywhere, then dot-source `cc.ps1` from your PowerShell profile:
-
-```powershell
-git clone https://github.com/riecodes/cc3x3.git
-# then run the installer, which appends the dot-source line to your $PROFILE:
-pwsh -File .\cc3x3\install.ps1
-```
-
-Or add the line yourself to `$PROFILE` (`~\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1` or `~\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`):
-
-```powershell
-. "C:\path\to\cc3x3\cc.ps1"
-```
-
-Open a new Terminal window (or run `. $PROFILE`) and type `cc`.
 
 ## Config
 
