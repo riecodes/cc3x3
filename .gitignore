@@ -1,0 +1,5 @@
+# Syncthing (C:\dev is synced)
+*.sync-conflict-*
+~syncthing~*
+.stfolder/
+.stversions/
